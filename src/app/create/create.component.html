@@ -1,0 +1,89 @@
+<form>
+  <div class="form-group">
+    <label for="company">Company</label>
+    <input id="company" type="text" class="form-control" required #company>
+  </div>
+
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input id="title" type="text" class="form-control" required #title>
+  </div>
+
+  <div class="form-group">
+    <label for="link">Link</label>
+    <input id="link" type="text" class="form-control" #link>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-4">
+      <label for="country">Country</label>
+      <input id="country" type="text" class="form-control" value="CA" #country>
+    </div>
+    <div class="form-group col-4">
+      <label for="province">Province</label>
+      <select id="province" class="form-control" #province>
+        <option *ngFor="let p of provinces" [attr.selected]="p.name == 'ON' ? 'selected' : null">
+          {{ p.name }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group col-4">
+      <label for="city">City</label>
+      <input id="city" type="text" class="form-control" #city>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="workType">Work Type</label>
+    <select id="workType" class="form-control" required #workType>
+      <option *ngFor="let wt of workTypes">
+        {{ wt.name }}
+      </option>
+    </select>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-4">
+      <label for="status">Status</label>
+      <select id="status" class="form-control" required #status>
+        <option *ngFor="let s of statuses">
+          {{ s.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="col-8">
+      <label for="applied">Date Applied</label>
+      <div id="applied" class="row g-1">
+        <div class="col-6">
+          <input type="text" class="form-control" placeholder="YY" pattern="\d\d\d\d" maxlength="4" value="{{ year }}" #y>
+        </div>
+        <div class="col-3">
+          <input type="text" class="form-control" placeholder="MM" pattern="\d\d" maxlength="2" value="{{ month | number: '2.0' }}" #m>
+        </div>
+        <div class="col-3">
+          <input type="text" class="form-control" placeholder="DD" pattern="\d\d" maxlength="2" value="{{ day | number: '2.0' }}" #d>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea id="description" type="text" class="form-control" rows="4" #description></textarea>
+  </div>
+  
+  <div class="form-group">
+    <label for="comment">Comment</label>
+    <textarea id="comment" type="text" class="form-control" rows="4" #comment></textarea>
+  </div>
+
+  <br/>
+  <button id="submit" type="button" class="btn btn-success" 
+    (click)="add(company.value, title.value, link.value, 
+      country.value, province.value, city.value, workType.value, 
+      status.value, +y.value, +m.value, +d.value, 
+      description.value, comment.value)">
+    Submit
+  </button>
+</form>

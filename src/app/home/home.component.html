@@ -1,0 +1,52 @@
+<section>
+  <form>
+    <div class="row">
+      <div class="col-4">
+          <input class="form-control" type="text" placeholder="filter" #filter />
+      </div>
+        
+      <div class="col-2">
+        <select class="form-control">
+          <option>All Statuses</option>
+          <option>Applied</option>
+          <option>Rejected</option>
+        </select>
+      </div>
+
+      <div class="col-2">
+        <select class="form-control">
+          <option>All time</option>
+          <option>Last 30 days</option>
+          <option>Last 60 days</option>
+        </select>
+      </div>
+
+      <div class="col-4 d-flex justify-content-end">
+        <a routerLink="/create">
+          <button class="btn btn-success" type="button">+</button>
+        </a>
+      </div>
+    </div>
+  </form>
+</section>
+
+<section class="results">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Company</th>
+        <th scope="col">Title</th>
+        <th scope="col">Status</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let job of filteredJobList">
+        <td>{{ job.company }}</td>
+        <td><a [routerLink]="['/details', job.id]">{{ job.title }}</a></td>
+        <td>{{ job.status }}</td>
+        <td>{{ job.updated }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
