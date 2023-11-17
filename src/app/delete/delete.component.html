@@ -1,0 +1,13 @@
+<app-home-button></app-home-button>
+
+<div class="alert alert-danger text-center">
+    <h5 class="alert-heading">Attention</h5>
+    <p class="mb-2">Are you sure you want to delete the following job entry?</p>
+    <button type="button" class="btn btn-outline-success mx-2" (click)="delete()">
+        Yes
+    </button>
+    <button type="button" class="btn btn-outline-secondary mx-2" [routerLink]="['/']">
+        No
+    </button>
+</div>
+<app-details [job]="job"></app-details>

@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { DetalsComponent } from './detals/detals.component';
+import { DetailsComponent } from './details/details.component';
 import { CreateComponent } from './create/create.component';
+import { DeleteComponent } from './delete/delete.component';
+import { EditComponent } from './edit/edit.component';
 
 const routes: Routes = [
   { 
@@ -11,11 +13,19 @@ const routes: Routes = [
   },
   {
     path: 'details/:id',
-    component: DetalsComponent
+    component: DetailsComponent
   },
   {
     path: 'create',
     component: CreateComponent
+  },
+  {
+    path: 'edit/:id',
+    component: EditComponent
+  },
+  {
+    path: 'delete/:id',
+    component: DeleteComponent
   }
 ];
 

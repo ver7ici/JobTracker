@@ -1,0 +1,85 @@
+<form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="company">Company</label>
+      <input id="company" type="text" class="form-control" formControlName="company">
+    </div>
+  
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input id="title" type="text" class="form-control" formControlName="title">
+    </div>
+  
+    <div class="row">
+      <div class="form-group col">
+        <label for="country">Country</label>
+        <input id="country" type="text" class="form-control" formControlName="country">
+      </div>
+
+      <div class="form-group col">
+        <label for="province">Province</label>
+        <input id="province" type="text" class="form-control" formControlName="province">
+      </div>
+
+      <div class="form-group col">
+        <label for="city">City</label>
+        <input id="city" type="text" class="form-control" formControlName="city">
+      </div>
+
+      <div class="form-group col">
+        <label for="workType">Work Type</label>
+        <select id="workType" class="form-control" formControlName="type">
+          <option *ngFor="let wt of formOptions.workTypes" [ngValue]="wt">
+            {{ wt }}
+          </option>
+        </select>
+      </div>
+    </div>
+    
+    
+  
+    <div class="row">
+        <div class="form-group col">
+            <label for="year">Date Applied</label>
+            <input id="year" type="text" class="form-control" placeholder="YYYY" pattern="\d\d\d\d" maxlength="4" formControlName="year">
+        </div>
+
+        <div class="form-group col">
+            <label for="month"></label>
+            <input id="month" type="text" class="form-control" placeholder="MM" pattern="\d+" maxlength="2" formControlName="month">
+        </div>
+
+        <div class="form-group col">
+            <label for="day"></label>
+            <input id="day" type="text" class="form-control" placeholder="DD" pattern="\d+" maxlength="2" formControlName="day">
+        </div>
+
+        <div class="form-group col">
+            <label for="status">Status</label>
+            <select id="status" class="form-control" formControlName="status">
+                <option *ngFor="let s of formOptions.statuses" [ngValue]="s">
+                    {{ s }}
+                </option>
+            </select>
+        </div>
+    </div>
+  
+    <div class="form-group">
+        <label for="link">Link</label>
+        <input id="link" type="text" class="form-control" formControlName="link">
+      </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" type="text" class="form-control" rows="4" formControlName="description"></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label for="comment">Comment</label>
+      <textarea id="comment" type="text" class="form-control" rows="4" formControlName="comment"></textarea>
+    </div>
+  
+    <br/>
+    <button type="submit" class="btn btn-success" [disabled]="!jobForm.valid">
+      Submit
+    </button>
+</form>

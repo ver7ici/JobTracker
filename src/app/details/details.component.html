@@ -1,0 +1,32 @@
+<app-home-button></app-home-button>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row details-head">
+            <div class="col-8">
+                <h4 class="card-title">
+                    <a href="{{ job?.link }}" target="_blank">
+                        {{ job?.title }}
+                    </a>
+                </h4>
+                <h5 class="card-subtitle text-muted">
+                    {{ job?.company }}
+                </h5>
+                <p class="card-text">
+                    {{ locationStr() }} - {{ job?.type }}
+                </p>
+            </div>
+            <div class="col-4">
+                <p class="card-text text-end">
+                    Applied: {{ job?.applied }} <br/>
+                    Updated: {{ job?.updated }} <br/>
+                    Status: {{ job?.status }}
+                </p>
+            </div>
+        </div>
+        
+        <div class="card-text" style="white-space: pre-wrap;">
+            {{ job?.description }}
+        </div>
+    </div>
+</div>

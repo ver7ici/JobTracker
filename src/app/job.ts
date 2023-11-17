@@ -1,15 +1,19 @@
 export class Job {
-  id: number = 0;
-  title: string = "";
-  company: string = "";
-  country: string = "";
-  province: string = "";
-  city: string = "";
-  type: string = "";
-  applied: string = "";
-  updated: string = "";
-  status: string = "";
-  description: string = "";
-  link: string = "";
-  comment: string = "";
+
+  constructor(
+    public id: number = 0, 
+    public company: string = "", 
+    public title: string = "",
+    public country: string = "CA", 
+    public province: string = "ON", 
+    public city: string = "",
+    public type: string = "", 
+    public status: string = "Applied",
+    public applied: string = "0000-00-00", 
+    public updated: string = "0000-00-00",
+    public link: string = "", 
+    public description: string = "", 
+    public comment: string = ""
+  ) {}
+  
 }
