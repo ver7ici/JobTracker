@@ -1,26 +1,26 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Job } from '../job';
 import { JobService } from '../job.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { formatNumber, formatDate } from '@angular/common';
+import { FormBuilder, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
+import { FormOptions } from '../form-options';
 
 @Component({
   selector: 'app-job-form',
   templateUrl: './job-form.component.html',
   styleUrls: ['./job-form.component.css']
 })
-export class JobFormComponent {
-  @Input() jobId: number | undefined;
-  job: Job | undefined;
+export class JobFormComponent implements OnInit {
+  @Input() public jobId: number | undefined;
+  private job: Job | undefined;
 
-  formOptions = {
-    statuses: [] as string[],
-    workTypes: [] as string[]
+  protected formOptions = {
+    status: new FormOptions(),
+    type: new FormOptions()
   };
 
-  jobForm = this.fb.group({
+  protected jobForm = this.fb.group({
     company: ['', Validators.required],
     title: ['', Validators.required],
     link: [''],
@@ -38,45 +38,46 @@ export class JobFormComponent {
 
   constructor(private service: JobService, private router: Router, private fb: FormBuilder) {}
 
-  async ngOnInit(): Promise<void> {
+  public async ngOnInit(): Promise<void> {
     if (this.jobId) {
       this.job = await firstValueFrom(this.service.getJobById(this.jobId));
     }
-    await this.initForm();
+    this.formOptions = await firstValueFrom(this.service.getFormOptions());
+    this.initForm();
   }
 
-  async initForm(): Promise<void> {
-    const formOptions = await firstValueFrom(this.service.getFormOptions());
-    formOptions.statuses.forEach(s => this.formOptions.statuses.push(s.name));
-    formOptions.workTypes.forEach(w => this.formOptions.workTypes.push(w.name));
-
-    let appliedDate = new Date();
+  private initForm(): void {
+    var appliedDate = new Date();
     if (this.job) {
       appliedDate = new Date(this.job.applied);
+      this.jobForm.patchValue({
+        company: this.job.company,
+        title: this.job.title,
+        link: this.job.link,
+        country: this.job.country,
+        province: this.job.province,
+        city: this.job.city,
+        type: this.job.type,
+        status: this.job.status,
+        description: this.job.description,
+        comment: this.job.comment
+      });
     } else {
       this.job = new Job();
-      this.job.status = formOptions.statuses[0].name;
-      this.job.type = formOptions.workTypes[0].name;
+      this.jobForm.patchValue({
+        type: this.formOptions?.type.getName(1),
+        status: this.formOptions?.status.getName(1)
+      });
     }
-    
+
     this.jobForm.patchValue({
-      company: this.job.company,
-      title: this.job.title,
-      link: this.job.link,
-      country: this.job.country,
-      province: this.job.province,
-      city: this.job.city,
-      type: this.job.type,
-      status: this.job.status,
       year: appliedDate.getFullYear(),
       month: appliedDate.getMonth() + 1,
-      day: appliedDate.getDate(),
-      description: this.job.description,
-      comment: this.job.comment
+      day: appliedDate.getDate()
     });
   }
 
-  async onSubmit(): Promise<void> {
+  protected async onSubmit(): Promise<void> {
     const job = this.job as Job;
     const v = this.jobForm.value;
 
@@ -87,14 +88,13 @@ export class JobFormComponent {
     job.city = v.city!;
     job.type = v.type!;
     job.status = v.status!;
-    job.applied = `${v.year}-${formatNumber(v.month!, 'en-US', '2.0')}-${formatNumber(v.day!, 'en-US', '2.0')}`;
-    job.updated = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
+    job.applied = new Date(v.year!, v.month!, v.day!),
+    job.updated = new Date();
     job.link = v.link!;
     job.description = v.description!;
     job.comment = v.comment!;
 
     if (job.id == 0) {
-      job.id = await this.service.generateId();
       this.service.addJob(job);
     } else {
       this.service.updateJob(job);

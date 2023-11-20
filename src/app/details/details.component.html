@@ -2,31 +2,37 @@
 
 <div class="card">
     <div class="card-body">
-        <div class="row details-head">
+        <div class="row header">
             <div class="col-8">
-                <h4 class="card-title">
+                <h3 class="card-title">
                     <a href="{{ job?.link }}" target="_blank">
                         {{ job?.title }}
                     </a>
-                </h4>
-                <h5 class="card-subtitle text-muted">
+                </h3>
+                <h4 class="card-subtitle text-muted">
                     {{ job?.company }}
-                </h5>
+                </h4>
                 <p class="card-text">
                     {{ locationStr() }} - {{ job?.type }}
                 </p>
             </div>
             <div class="col-4">
                 <p class="card-text text-end">
-                    Applied: {{ job?.applied }} <br/>
-                    Updated: {{ job?.updated }} <br/>
+                    Applied: {{ job?.applied | date: 'yyyy-MM-dd' }} <br/>
+                    Updated: {{ job?.updated | date: 'yyyy-MM-dd' }} <br/>
                     Status: {{ job?.status }}
                 </p>
             </div>
         </div>
         
-        <div class="card-text" style="white-space: pre-wrap;">
-            {{ job?.description }}
+        <div class="description">
+            <h5 class="card-text">Job Description:</h5>
+            <p class="card-text">{{ job?.description }}</p>
+        </div>
+
+        <div class="comment">
+            <h5 class="card-text">Comments:</h5>
+            <p class="card-text">{{ job?.comment }}</p>
         </div>
     </div>
 </div>

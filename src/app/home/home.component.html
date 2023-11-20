@@ -1,4 +1,4 @@
-<section>
+<div class="filter mb-1">
   <form [formGroup]="filterForm">
     <div class="row">
       <div class="col-3">
@@ -13,7 +13,7 @@
 
       <div class="col-6">
         <div class="btn-group" role="group">
-          <ng-container *ngFor="let sf of statusFilters">
+          <ng-container *ngFor="let sf of status.toList()">
             <input type="checkbox" class="btn-check" id="status-{{ sf.id }}" formControlName="{{ sf.name.toLowerCase() }}">
             <label for="status-{{ sf.id }}" class="btn btn-outline-secondary" >{{ sf.name }}</label>
           </ng-container>
@@ -29,16 +29,16 @@
       </div>
     </div>
   </form>
-</section>
+</div>
 
-<section class="results">
+<div class="results">
   <table class="table table-hover">
     <thead class="sticky-top">
       <tr>
         <th scope="col">Company</th>
         <th scope="col">Title</th>
         <th scope="col">Status</th>
-        <th scope="col">Date</th>
+        <th scope="col">Updated</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
@@ -47,7 +47,7 @@
         <td [routerLink]="['/details', job.id]">{{ job.company }}</td>
         <td [routerLink]="['/details', job.id]">{{ job.title }}</td>
         <td>{{ job.status }}</td>
-        <td>{{ job.updated }}</td>
+        <td>{{ job.updated | date: 'yyyy-MM-dd' }}</td>
         <td>
           <button type="button" class="btn btn-outline-info btn-sm" [routerLink]="['/details', job.id]">
             <i class="bi bi-justify-left"></i>
@@ -62,4 +62,4 @@
       </tr>
     </tbody>
   </table>
-</section>
+</div>

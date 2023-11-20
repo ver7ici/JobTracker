@@ -1,5 +1,16 @@
-.details-head {
+.header {
     border-bottom: 1px solid;
     padding-bottom: 1rem;
     margin-bottom: 1rem;
 }
+
+.description {
+    white-space: pre-wrap;
+}
+
+.comment {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid;
+}
+

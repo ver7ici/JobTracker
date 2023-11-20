@@ -4,4 +4,4 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `start.bat {hostname}` to host the dev server and json-server. Navigate to `http://{hostname}:4200`.
+Run `npm run start` to host the dev server. CRUD servce must also be running on the same host`.

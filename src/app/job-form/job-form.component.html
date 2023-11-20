@@ -28,15 +28,13 @@
       <div class="form-group col">
         <label for="workType">Work Type</label>
         <select id="workType" class="form-control" formControlName="type">
-          <option *ngFor="let wt of formOptions.workTypes" [ngValue]="wt">
-            {{ wt }}
+          <option *ngFor="let wt of formOptions?.type?.toList()" [ngValue]="wt.name">
+            {{ wt.name }}
           </option>
         </select>
       </div>
     </div>
     
-    
-  
     <div class="row">
         <div class="form-group col">
             <label for="year">Date Applied</label>
@@ -56,8 +54,8 @@
         <div class="form-group col">
             <label for="status">Status</label>
             <select id="status" class="form-control" formControlName="status">
-                <option *ngFor="let s of formOptions.statuses" [ngValue]="s">
-                    {{ s }}
+                <option *ngFor="let s of formOptions?.status?.toList()" [ngValue]="s.name">
+                    {{ s.name }}
                 </option>
             </select>
         </div>

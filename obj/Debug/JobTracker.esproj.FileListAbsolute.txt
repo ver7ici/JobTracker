@@ -1,1 +1,0 @@
-D:\source\repos\JobTracker\obj\Debug\JobTracker.esproj.CoreCompileInputs.cache
