@@ -80,8 +80,13 @@ export class JobService {
 
   private toJobEntry(job: Job): JobEntry {
     let je: Partial<JobEntry> = job;
+    
     je.type_id = this.formOptions.type.getId(job.type);
     je.status_id = this.formOptions.status.getId(job.status);
+
+    const re = /[\u0800-\uFFFF]/g;
+    je.description = job.description.replace(re, '');
+
     return je as JobEntry;
   }
 

@@ -81,18 +81,18 @@ export class JobFormComponent implements OnInit {
     const job = this.job as Job;
     const v = this.jobForm.value;
 
-    job.company = v.company!;
-    job.title = v.title!;
-    job.country = v.country!;
-    job.province = v.province!;
-    job.city = v.city!;
+    job.company = v.company!.trim();
+    job.title = v.title!.trim();
+    job.country = v.country!.trim();
+    job.province = v.province!.trim();
+    job.city = v.city!.trim();
     job.type = v.type!;
     job.status = v.status!;
     job.applied = new Date(v.year!, v.month!, v.day!),
     job.updated = new Date();
-    job.link = v.link!;
-    job.description = v.description!;
-    job.comment = v.comment!;
+    job.link = v.link!.trim();
+    job.description = v.description!.trim();
+    job.comment = v.comment!.trim();
 
     if (job.id == 0) {
       this.service.addJob(job);

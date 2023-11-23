@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   protected timeFilters = [
     {name: "All Time", value: -1}, 
     {name: "Last 7 Days", value: 7}, 
+    {name: "Last 14 Days", value: 14},
     {name: "Last 30 days", value: 30}
   ];
 
@@ -35,7 +36,7 @@ export class HomeComponent implements OnInit {
   public async ngOnInit(): Promise<void> {
     this.service.getAllJobs().subscribe(jobs => {
       this.jobList = jobs;
-      this.filteredJobList = jobs.sort((j1, j2) => this.sortByDateThenCompany(j1, j2));
+      this.filteredJobList = jobs.sort((j1, j2) => this.sortByRecent(j1, j2));
     });
 
     this.status = (await firstValueFrom(this.service.getFormOptions())).status;
@@ -43,11 +44,11 @@ export class HomeComponent implements OnInit {
     this.onFilterChange();
   }
 
-  private sortByDateThenCompany(j1: Job, j2: Job): number {
+  private sortByRecent(j1: Job, j2: Job): number {
     let d1 = j1.updated;
     let d2 = j2.updated;
-    if (d1 < d2) return -1;
-    if (d2 < d1) return 1;
+    if (d1 < d2) return 1;
+    if (d2 < d1) return -1;
     return j1.company.localeCompare(j2.company);
   }
 
@@ -80,7 +81,7 @@ export class HomeComponent implements OnInit {
 
         return true;
       })
-      .sort((j1, j2) => this.sortByDateThenCompany(j1, j2))
+      .sort((j1, j2) => this.sortByRecent(j1, j2))
     });
   }
 }
