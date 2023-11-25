@@ -88,7 +88,7 @@ export class JobFormComponent implements OnInit {
     job.city = v.city!.trim();
     job.type = v.type!;
     job.status = v.status!;
-    job.applied = new Date(v.year!, v.month!, v.day!),
+    job.applied = new Date(v.year!, v.month! - 1, v.day!),
     job.updated = new Date();
     job.link = v.link!.trim();
     job.description = v.description!.trim();
