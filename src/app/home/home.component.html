@@ -13,9 +13,9 @@
 
       <div class="col-6">
         <div class="btn-group" role="group">
-          <ng-container *ngFor="let sf of status.toList()">
-            <input type="checkbox" class="btn-check" id="status-{{ sf.id }}" formControlName="{{ sf.name.toLowerCase() }}">
-            <label for="status-{{ sf.id }}" class="btn btn-outline-secondary" >{{ sf.name }}</label>
+          <ng-container *ngFor="let control of filterForm.controls.statusArray.controls; let i = index">
+            <input type="checkbox" class="btn-check" id="status-{{ i }}" [formControl]="control">
+            <label for="status-{{ i }}" class="btn btn-outline-secondary" >{{ status.getName(i+1) }}</label>
           </ng-container>
         </div>
       </div>

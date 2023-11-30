@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { Job } from '../job';
 import { JobService } from '../job.service';
 import { FormOptions } from '../form-options';
@@ -23,15 +23,13 @@ export class HomeComponent implements OnInit {
 
   protected status = new FormOptions();
 
-  protected filterForm = new FormGroup({
+  protected filterForm = this.fb.group({
     text: new FormControl(''),
     time: new FormControl(this.timeFilters[0]),
-    applied: new FormControl(),
-    interviewing: new FormControl(),
-    rejected: new FormControl()
+    statusArray: this.fb.array([])
   });
 
-  constructor(private service: JobService) { }
+  constructor(private service: JobService, private fb: FormBuilder) { }
 
   public async ngOnInit(): Promise<void> {
     this.service.getAllJobs().subscribe(jobs => {
@@ -40,8 +38,15 @@ export class HomeComponent implements OnInit {
     });
 
     this.status = (await firstValueFrom(this.service.getFormOptions())).status;
+    this.initForm();
 
     this.onFilterChange();
+  }
+
+  private initForm(): void {
+    for (let s of this.status.toList()) {
+      this.filterForm.controls.statusArray.push(this.fb.control(false));
+    }
   }
 
   private sortByRecent(j1: Job, j2: Job): number {
@@ -55,15 +60,14 @@ export class HomeComponent implements OnInit {
   private onFilterChange(): void {
     this.filterForm.valueChanges.subscribe(filter => {
       this.filteredJobList = this.jobList.filter(job => {
-        if (filter.applied || filter.interviewing || filter.rejected) {
-          if (!filter.applied && job.status === "Applied") {
-              return false;
-          }
-          if (!filter.interviewing && job.status === "Interviewing") {
-            return false;
-          }
-          if (!filter.rejected && job.status === "Rejected") {
-            return false;
+
+        if (filter.statusArray?.some(b => b as boolean)) {
+          for (let i = 0; i < filter.statusArray.length; i++) {
+            if (!(filter.statusArray[i] as boolean)) {
+              if (job.status === this.status.getName(i+1)) {
+                return false;
+              }
+            }
           }
         }
 
